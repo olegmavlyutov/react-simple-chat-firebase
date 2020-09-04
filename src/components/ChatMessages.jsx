@@ -18,7 +18,7 @@ const ChatMessages = () => {
     useEffect(() => {
         const rerender = setInterval(() => {
             messagesLoading()
-                .then(e => setMessages(e))
+                .then(e => setMessages(e));
         }, 1000);
         return () => clearInterval(rerender);
     }, [])
@@ -28,8 +28,8 @@ const ChatMessages = () => {
 
             {
                 (messages)
-                    ? messages.map(message => (
-                        <li>{message}</li>))
+                    ? messages.map((message, index) => (
+                        <li key={index}>{message}</li>))
                     : <p>Нет сообщений</p>
             }
 

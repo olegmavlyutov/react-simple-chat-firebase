@@ -9,9 +9,9 @@ const InputMessage = () => {
             setValue(event.target.value);
 
             try {
-                await axios.post('/messages.json', JSON.stringify(value))
+                await axios.post('/messages.json', JSON.stringify(value));
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
 
             setValue('');
