@@ -7,7 +7,9 @@ const ChatMessages = () => {
     const messagesLoading = async () => {
         try {
             const response = await axios.get('/messages.json')
-            return Object.values(response.data)
+            return (response.data !== null && response.data !== undefined)
+                ? Object.values(response.data)
+                : null
         } catch (e) {
             console.log(e)
         }
