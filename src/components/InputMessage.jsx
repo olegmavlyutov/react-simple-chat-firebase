@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axios from 'axios';
+import axios from '../axios/axios.config';
 
 const InputMessage = () => {
     const [value, setValue] = useState('');
@@ -10,7 +10,7 @@ const InputMessage = () => {
             console.log('Ушло в value', value);
 
             try {
-                const response = await axios.post('https://react-simple-chat-firebase.firebaseio.com/messages.json', value)
+                const response = await axios.post('/messages.json', JSON.stringify(value))
                 console.log(response.data)
             } catch (e) {
                 console.log(e)

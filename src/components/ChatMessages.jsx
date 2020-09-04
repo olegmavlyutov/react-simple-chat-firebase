@@ -1,30 +1,35 @@
-import React, {useEffect} from 'react';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import axios from '../axios/axios.config';
 
 const ChatMessages = () => {
+    const [messages, setMessages] = useState([]);
+
     const messagesLoading = async () => {
         try {
-            const response = await axios.get('https://react-simple-chat-firebase.firebaseio.com/messages.json')
-            // const list = Object.values(response.data).map(message => messagesList.push(message))
-            return (Object.values(response.data))
+            const response = await axios.get('/messages.json')
+            return Object.values(response.data)
         } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
-        const list = [];
-        messagesLoading().then(e => e.map(i => list.push(i)))
-        console.log(list)
-    })
+        const rerender = setInterval(() => {
+            messagesLoading()
+                .then(e => setMessages(e))
+        }, 1000);
+        return () => clearInterval(rerender);
+    }, [])
 
     return (
         <div>
 
-            <li>
-                {/*<button onClick={messagesLoading}>Load</button>*/}
-                {/*{console.log()}*/}
-            </li>
+            {
+                (messages)
+                    ? messages.map(message => (
+                        <li>{message}</li>))
+                    : <p>Нет сообщений</p>
+            }
 
         </div>
     );
